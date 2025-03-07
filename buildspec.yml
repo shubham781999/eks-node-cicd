@@ -26,4 +26,4 @@ phases:
       - kubectl get pods --namespace=default || echo "Failed to get pods, continuing..."
       - echo Updating Kubernetes deployment...
       - kubectl set image deployment/practice-app practice-app=222634367630.dkr.ecr.ap-south-1.amazonaws.com/practice-app:latest --namespace=default
-      - kubectl rollout status deployment practice-app --namespace=default
+      - kubectl rollout restart  deployment practice-app --namespace=default
