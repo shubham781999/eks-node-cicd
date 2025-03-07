@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-app
+  name: practice-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: node-app
+      app: practice-app
   template:
     metadata:
       labels:
-        app: node-app
+        app: practice-app
     spec:
       containers:
-        - name: node-app
+        - name: practice-app
           image: 222634367630.dkr.ecr.ap-south-1.amazonaws.com/practice-app:latest
           imagePullPolicy: Always
           ports:
