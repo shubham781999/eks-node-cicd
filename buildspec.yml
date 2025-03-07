@@ -15,17 +15,15 @@ phases:
       - echo Building Docker image...
       - docker build -t practice-app .
       - echo Tagging Docker image...
-      - docker tag practice-app:latest 222634367630.dkr.ecr.ap-south-1.amazonaws.com/practice-app:latest:$CODEBUILD_BUILD_NUMBER
       - docker tag practice-app:latest 222634367630.dkr.ecr.ap-south-1.amazonaws.com/practice-app:latest
 
   post_build:
     commands:
       - echo Pushing Docker images to Amazon ECR...
-      - docker push 222634367630.dkr.ecr.ap-south-1.amazonaws.com/practice-app:latest:$CODEBUILD_BUILD_NUMBER
       - docker push 222634367630.dkr.ecr.ap-south-1.amazonaws.com/practice-app:latest
       - echo Verifying Kubernetes connectivity...
       - kubectl cluster-info || echo "Failed to get cluster info, continuing..."
       - kubectl get pods --namespace=default || echo "Failed to get pods, continuing..."
       - echo Updating Kubernetes deployment...
       - kubectl set image deployment/practice-app practice-app=222634367630.dkr.ecr.ap-south-1.amazonaws.com/practice-app:latest --namespace=default
-      - kubectl rollout restart deployment node-app --namespace=default
+      - kubectl rollout status deployment practice-app --namespace=default
